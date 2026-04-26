@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Season Dahal — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --navy:#050d1a;
+  --navy2:#08142a;
+  --navy3:#0d1f3c;
+  --navy4:#122448;
+  --gold:#c9a84c;
+  --gold2:#e8c87a;
+  --gold3:#f5e0a0;
+  --goldglow:rgba(201,168,76,0.18);
+  --text:#c8d8f0;
+  --muted:#6a85a8;
+  --border:rgba(201,168,76,0.15);
+  --borderhov:rgba(201,168,76,0.45);
+  --card:#0a1828;
+  --ff:'JetBrains Mono',monospace;
+  --ff2:'IBM Plex Mono',monospace;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:var(--ff2);
+  background:var(--navy);
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CURSOR */
+.cursor{
+  position:fixed;width:10px;height:10px;background:var(--gold);
+  border-radius:50%;pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);transition:transform 0.1s;
+  mix-blend-mode:screen;
+}
+.cursor-ring{
+  position:fixed;width:32px;height:32px;border:1px solid var(--gold);
+  border-radius:50%;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);transition:all 0.18s ease;
+  opacity:0.6;
+}
+
+/* GRID BG */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;z-index:0;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 5%;
+  background:rgba(5,13,26,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--ff);font-weight:800;font-size:1.1rem;
+  color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;
+}
+.nav-logo span{color:var(--text);opacity:0.4;}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{
+  text-decoration:none;color:var(--muted);font-size:0.78rem;
+  font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+  transition:color 0.2s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;
+  transition:transform 0.25s;
+}
+.nav-links a:hover{color:var(--gold);}
+.nav-links a:hover::after{transform:scaleX(1);}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:8rem 5% 4rem;
+  gap:3rem;position:relative;z-index:1;
+}
+.hero-label{
+  font-family:var(--ff);font-size:0.72rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:1.2rem;display:flex;align-items:center;gap:0.7rem;
+}
+.hero-label::before{content:'';width:28px;height:1px;background:var(--gold);}
+.hero-name{
+  font-family:var(--ff);font-weight:800;
+  font-size:clamp(2.8rem,5vw,4.8rem);
+  line-height:1.0;letter-spacing:-0.02em;
+  color:#fff;margin-bottom:0.6rem;
+}
+.hero-name .gold{color:var(--gold);}
+.hero-role{
+  font-family:var(--ff);font-size:0.95rem;
+  color:var(--muted);font-weight:400;margin-bottom:1.8rem;
+  letter-spacing:0.04em;
+}
+.hero-role .blink{
+  display:inline-block;width:10px;height:1.1em;
+  background:var(--gold);margin-left:3px;vertical-align:text-bottom;
+  animation:blink 1.1s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.hero-desc{
+  font-family:var(--ff2);font-size:0.9rem;line-height:1.8;
+  color:var(--muted);max-width:480px;margin-bottom:2.5rem;
+  border-left:2px solid var(--gold);padding-left:1.2rem;
+}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-gold{
+  font-family:var(--ff);font-size:0.8rem;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  background:var(--gold);color:var(--navy);
+  padding:0.75rem 1.8rem;border-radius:3px;text-decoration:none;
+  transition:all 0.25s;border:1.5px solid var(--gold);
+  box-shadow:0 0 20px rgba(201,168,76,0.25);
+}
+.btn-gold:hover{background:transparent;color:var(--gold);box-shadow:0 0 30px rgba(201,168,76,0.4);}
+.btn-ghost{
+  font-family:var(--ff);font-size:0.8rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;
+  background:transparent;color:var(--muted);
+  padding:0.75rem 1.8rem;border-radius:3px;text-decoration:none;
+  border:1.5px solid var(--border);transition:all 0.25s;
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+
+/* HERO RIGHT — stat grid */
+.hero-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--border);border:1px solid var(--border);
+  border-radius:6px;overflow:hidden;
+}
+.stat-cell{
+  background:var(--card);padding:1.8rem 1.5rem;
+  transition:background 0.25s;
+}
+.stat-cell:hover{background:var(--navy3);}
+.stat-num{
+  font-family:var(--ff);font-weight:800;font-size:2.4rem;
+  color:var(--gold);line-height:1;margin-bottom:0.4rem;
+  letter-spacing:-0.03em;
+}
+.stat-label{font-size:0.75rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;}
+.stat-sub{font-size:0.82rem;color:var(--text);margin-top:0.5rem;line-height:1.5;}
+
+/* SECTIONS */
+section{padding:5.5rem 5%;position:relative;z-index:1;}
+section:nth-child(even){background:rgba(8,20,42,0.5);}
+.sec-header{margin-bottom:3rem;}
+.sec-tag{
+  font-family:var(--ff);font-size:0.72rem;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:0.5rem;display:flex;align-items:center;gap:0.6rem;
+}
+.sec-tag::before{content:'//';opacity:0.5;}
+.sec-title{
+  font-family:var(--ff);font-weight:800;
+  font-size:clamp(1.6rem,3vw,2.4rem);
+  color:#fff;letter-spacing:-0.02em;
+}
+.sec-line{
+  width:60px;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+  margin-top:1rem;
+}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:2fr 1fr;gap:2rem;}
+.about-text{
+  font-size:0.92rem;line-height:1.9;color:var(--muted);
+}
+.about-text p+p{margin-top:1rem;}
+.about-meta{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.meta-row{
+  background:var(--card);padding:1rem 1.2rem;
+  display:flex;flex-direction:column;gap:0.2rem;
+  transition:background 0.2s;
+}
+.meta-row:hover{background:var(--navy3);}
+.meta-k{font-family:var(--ff);font-size:0.68rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;}
+.meta-v{font-size:0.85rem;color:var(--text);}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.skill-card{
+  background:var(--card);padding:1.8rem;
+  transition:background 0.25s;position:relative;overflow:hidden;
+}
+.skill-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),transparent);
+  transform:scaleX(0);transform-origin:left;transition:transform 0.3s;
+}
+.skill-card:hover{background:var(--navy3);}
+.skill-card:hover::before{transform:scaleX(1);}
+.skill-card-head{
+  font-family:var(--ff);font-size:0.78rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:1.2rem;
+  display:flex;align-items:center;gap:0.6rem;
+}
+.skill-tag{
+  display:inline-block;
+  font-family:var(--ff);font-size:0.72rem;
+  border:1px solid var(--border);color:var(--muted);
+  padding:0.28rem 0.65rem;margin:0.25rem 0.2rem 0.25rem 0;
+  border-radius:2px;transition:all 0.2s;
+}
+.skill-card:hover .skill-tag{border-color:rgba(201,168,76,0.25);color:var(--text);}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.proj-card{
+  background:var(--card);padding:2rem 1.8rem;
+  transition:background 0.25s;position:relative;
+  display:flex;flex-direction:column;gap:0.8rem;
+}
+.proj-card:hover{background:var(--navy3);}
+.proj-num{
+  font-family:var(--ff);font-size:0.68rem;color:var(--gold);
+  letter-spacing:0.15em;opacity:0.6;
+}
+.proj-name{
+  font-family:var(--ff);font-weight:700;font-size:1rem;
+  color:#fff;line-height:1.3;letter-spacing:-0.01em;
+}
+.proj-year{font-size:0.72rem;color:var(--muted);}
+.proj-desc{font-size:0.83rem;line-height:1.75;color:var(--muted);flex:1;}
+.proj-tags{display:flex;flex-wrap:wrap;gap:0.3rem;margin-top:auto;padding-top:0.8rem;border-top:1px solid var(--border);}
+.proj-tag{
+  font-family:var(--ff);font-size:0.68rem;
+  background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);
+  color:var(--gold2);padding:0.2rem 0.55rem;border-radius:2px;
+}
+
+/* EDUCATION */
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.edu-card{
+  background:var(--card);padding:2rem 1.8rem;
+  transition:background 0.25s;
+}
+.edu-card:hover{background:var(--navy3);}
+.edu-icon{font-size:1.6rem;margin-bottom:1rem;}
+.edu-degree{
+  font-family:var(--ff);font-weight:700;font-size:0.95rem;
+  color:#fff;margin-bottom:0.5rem;line-height:1.3;
+}
+.edu-school{font-size:0.82rem;color:var(--muted);line-height:1.5;margin-bottom:0.6rem;}
+.edu-year{
+  font-family:var(--ff);font-size:0.72rem;color:var(--gold);
+  letter-spacing:0.08em;
+}
+
+/* LEADERSHIP */
+.lead-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-bottom:1px;}
+.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.lead-card,.cert-card{
+  background:var(--card);padding:1.8rem;
+  transition:background 0.25s;
+}
+.lead-card:hover,.cert-card:hover{background:var(--navy3);}
+.lead-card-head{
+  font-family:var(--ff);font-size:0.72rem;font-weight:700;
+  color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:0.9rem;
+}
+.lead-text{font-size:0.85rem;color:var(--muted);line-height:1.75;}
+.lead-text strong{color:var(--text);}
+.cert-icon{font-size:1.4rem;margin-bottom:0.8rem;}
+.cert-name{font-family:var(--ff);font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:0.4rem;}
+.cert-issuer{font-size:0.78rem;color:var(--muted);}
+
+/* CONTACT */
+#contact{text-align:center;}
+.contact-wrapper{
+  max-width:800px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--border);border:1px solid var(--border);
+}
+.contact-cell{
+  background:var(--card);padding:2.5rem 2rem;
+  display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+  transition:background 0.25s;
+}
+.contact-cell:hover{background:var(--navy3);}
+.contact-cell-label{font-family:var(--ff);font-size:0.68rem;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;}
+.contact-cell-val{font-size:0.88rem;color:var(--text);}
+.contact-cell-val a{color:var(--gold2);text-decoration:none;}
+.contact-cell-val a:hover{color:var(--gold3);text-decoration:underline;}
+.contact-cta{margin-top:3rem;display:flex;justify-content:center;gap:1rem;}
+
+/* FOOTER */
+footer{
+  text-align:center;padding:2rem 5%;
+  font-family:var(--ff);font-size:0.72rem;color:var(--muted);
+  border-top:1px solid var(--border);
+  letter-spacing:0.06em;
+}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.reveal.on{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+.reveal-delay-3{transition-delay:0.3s;}
+.reveal-delay-4{transition-delay:0.4s;}
+.reveal-delay-5{transition-delay:0.5s;}
+
+/* GLOW EFFECT */
+.glow{box-shadow:0 0 40px rgba(201,168,76,0.08);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding-top:7rem;}
+  .hero-stats{display:none;}
+  .about-grid,.lead-grid,.contact-wrapper{grid-template-columns:1fr;}
+  .skills-grid,.projects-grid,.edu-grid,.cert-grid{grid-template-columns:1fr 1fr;}
+  .hero-desc{max-width:100%;}
+}
+@media(max-width:600px){
+  .skills-grid,.projects-grid,.edu-grid,.cert-grid{grid-template-columns:1fr;}
+  .nav-links{gap:1.2rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SD<span>::</span>Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div>
+    <div class="hero-label reveal">Engineering Graduate</div>
+    <h1 class="hero-name reveal">Season<br/><span class="gold">Dahal</span></h1>
+    <p class="hero-role reveal">
+      BE Electronics &amp; Communication
+      <span class="blink"></span>
+    </p>
+    <p class="hero-desc reveal">
+      Detail-oriented engineer skilled in software development, QA testing,
+      DevOps, IoT systems, and game development. Based in Kathmandu, Nepal.
+      Open to internships and entry-level roles.
+    </p>
+    <div class="hero-btns reveal">
+      <a href="#contact" class="btn-gold">Get In Touch</a>
+      <a href="#projects" class="btn-ghost">View Projects</a>
+    </div>
+  </div>
+  <div class="hero-stats glow reveal">
+    <div class="stat-cell">
+      <div class="stat-num">6+</div>
+      <div class="stat-label">Projects Built</div>
+      <div class="stat-sub">IoT, CV, Games, Hardware</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Certifications</div>
+      <div class="stat-sub">ML, Flutter, Node.js</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">2025</div>
+      <div class="stat-label">Graduating</div>
+      <div class="stat-sub">Sagarmatha Engineering College</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">10+</div>
+      <div class="stat-label">Tech Skills</div>
+      <div class="stat-sub">Python, C++, Unity, SQL &amp; more</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-header reveal">
+    <div class="sec-tag">Profile</div>
+    <h2 class="sec-title">About Me</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        I am an enthusiastic and detail-oriented engineering graduate from Sagarmatha Engineering College,
+        Tribhuvan University, with a Bachelor's degree in Electronics, Communication &amp; Information Engineering.
+        I possess foundational knowledge in software testing, software development, and DevOps concepts
+        including SDLC, version control, and automation.
+      </p>
+      <p>
+        Skilled in analytical thinking, problem-solving, and ensuring product quality through systematic
+        and efficient processes. I am eager to apply academic knowledge to real-world projects, learn
+        modern tools and technologies, and contribute to building reliable, high-quality software solutions
+        in collaborative environments.
+      </p>
+      <p>
+        Beyond engineering, I enjoy exploring new technologies, traveling, and photography.
+        I am open to roles across QA, DevOps, cloud, data analysis, game development, and full-stack development.
+      </p>
+    </div>
+    <div class="about-meta reveal">
+      <div class="meta-row"><span class="meta-k">Location</span><span class="meta-v">Matatirtha, Kathmandu, Nepal</span></div>
+      <div class="meta-row"><span class="meta-k">Phone</span><span class="meta-v">+977 9863513850</span></div>
+      <div class="meta-row"><span class="meta-k">Email</span><span class="meta-v">seasondahalonly1@gmail.com</span></div>
+      <div class="meta-row"><span class="meta-k">Languages</span><span class="meta-v">Nepali · English · Hindi</span></div>
+      <div class="meta-row"><span class="meta-k">GitHub</span><span class="meta-v">github.com/01Season</span></div>
+      <div class="meta-row"><span class="meta-k">LinkedIn</span><span class="meta-v">season-dahal-60685a196</span></div>
+      <div class="meta-row"><span class="meta-k">Interests</span><span class="meta-v">Tech · Travel · Photography</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-header reveal">
+    <div class="sec-tag">Technical Profile</div>
+    <h2 class="sec-title">Skills</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-card-head">⌨ Programming</div>
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">C / C++</span>
+      <span class="skill-tag">Dart (Flutter)</span>
+      <span class="skill-tag">SQL</span>
+      <span class="skill-tag">HTML &amp; CSS</span>
+      <span class="skill-tag">C# (Unity)</span>
+    </div>
+    <div class="skill-card reveal reveal-delay-1">
+      <div class="skill-card-head">⚙ Tools</div>
+      <span class="skill-tag">Git &amp; GitHub</span>
+      <span class="skill-tag">JIRA</span>
+      <span class="skill-tag">Postman</span>
+      <span class="skill-tag">Selenium</span>
+      <span class="skill-tag">Unity Engine</span>
+      <span class="skill-tag">MS Office</span>
+      <span class="skill-tag">LaTeX</span>
+    </div>
+    <div class="skill-card reveal reveal-delay-2">
+      <div class="skill-card-head">☁ DevOps &amp; Cloud</div>
+      <span class="skill-tag">Linux CLI</span>
+      <span class="skill-tag">Shell Scripting</span>
+      <span class="skill-tag">Containerization</span>
+      <span class="skill-tag">Cloud Concepts</span>
+      <span class="skill-tag">CI/CD</span>
+      <span class="skill-tag">SDLC &amp; Scrum</span>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-card-head">📡 Domain</div>
+      <span class="skill-tag">Telecommunications</span>
+      <span class="skill-tag">Signal Processing</span>
+      <span class="skill-tag">RF &amp; Microwave</span>
+      <span class="skill-tag">IoT Systems</span>
+      <span class="skill-tag">DBMS</span>
+      <span class="skill-tag">Data Structures</span>
+    </div>
+    <div class="skill-card reveal reveal-delay-1">
+      <div class="skill-card-head">🎮 Game Dev</div>
+      <span class="skill-tag">Unity 2D</span>
+      <span class="skill-tag">C# OOP</span>
+      <span class="skill-tag">Cinemachine</span>
+      <span class="skill-tag">UI/UX Design</span>
+      <span class="skill-tag">Physics Engine</span>
+      <span class="skill-tag">Debugging</span>
+    </div>
+    <div class="skill-card reveal reveal-delay-2">
+      <div class="skill-card-head">🤝 Soft Skills</div>
+      <span class="skill-tag">Team Leadership</span>
+      <span class="skill-tag">Coordination</span>
+      <span class="skill-tag">Presentation</span>
+      <span class="skill-tag">Problem Solving</span>
+      <span class="skill-tag">Knowledge Sharing</span>
+      <span class="skill-tag">Teaching</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-header reveal">
+    <div class="sec-tag">Work</div>
+    <h2 class="sec-title">Projects</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="proj-card reveal">
+      <div class="proj-num">01 · 2023–2024</div>
+      <div class="proj-name">Smart Rainwater Harvesting System</div>
+      <div class="proj-desc">IoT-powered system to collect, store, distribute, and monitor rainwater usage. Machine learning algorithm predicts future water supply needs.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">IoT</span>
+        <span class="proj-tag">Machine Learning</span>
+        <span class="proj-tag">Python</span>
+      </div>
+    </div>
+    <div class="proj-card reveal reveal-delay-1">
+      <div class="proj-num">02 · 2022–2023</div>
+      <div class="proj-name">Number Plate Detection — Lane Violation</div>
+      <div class="proj-desc">Automatically detects number plates of bikes illegally crossing lanes and fetches their registration details from a database.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">Computer Vision</span>
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">Database</span>
+      </div>
+    </div>
+    <div class="proj-card reveal reveal-delay-2">
+      <div class="proj-num">03 · 2020</div>
+      <div class="proj-name">CNC Router Machine</div>
+      <div class="proj-desc">Built a functional CNC machine with movable arms in all three axes (X, Y, Z), using a drill bit to engrave custom patterns onto ply-board material.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">Hardware</span>
+        <span class="proj-tag">CNC</span>
+        <span class="proj-tag">Engineering</span>
+      </div>
+    </div>
+    <div class="proj-card reveal">
+      <div class="proj-num">04 · Unity</div>
+      <div class="proj-name">Endless Runner 2D Game</div>
+      <div class="proj-desc">2D endless runner built with Unity and C#. Features obstacle spawning, collision detection, real-time scoring, and game-over UI using OOP principles.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">Unity</span>
+        <span class="proj-tag">C#</span>
+        <span class="proj-tag">2D Game</span>
+      </div>
+    </div>
+    <div class="proj-card reveal reveal-delay-1">
+      <div class="proj-num">05 · Unity</div>
+      <div class="proj-name">Kites 2D — Flappy Bird Inspired</div>
+      <div class="proj-desc">Arcade-style 2D game where the player controls a kite through temple-like obstacles. Physics-based movement, score tracking, and responsive UI.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">Unity</span>
+        <span class="proj-tag">C#</span>
+        <span class="proj-tag">Physics</span>
+      </div>
+    </div>
+    <div class="proj-card reveal reveal-delay-2">
+      <div class="proj-num">06 · Various</div>
+      <div class="proj-name">Hackathon Projects</div>
+      <div class="proj-desc">Multiple projects built during hackathons and tech events at Sagarmatha Engineering College, developing rapid prototypes under time constraints.</div>
+      <div class="proj-tags">
+        <span class="proj-tag">Hackathon</span>
+        <span class="proj-tag">Prototyping</span>
+        <span class="proj-tag">Teamwork</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="sec-header reveal">
+    <div class="sec-tag">Academic</div>
+    <h2 class="sec-title">Education</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-icon">🎓</div>
+      <div class="edu-degree">Bachelor's in Engineering</div>
+      <div class="edu-school">Electronics, Communication &amp; Information Engineering · Sagarmatha Engineering College, Tribhuvan University, Lalitpur</div>
+      <div class="edu-year">2021 – 2025</div>
+    </div>
+    <div class="edu-card reveal reveal-delay-1">
+      <div class="edu-icon">📐</div>
+      <div class="edu-degree">Intermediate in Science (+2)</div>
+      <div class="edu-school">Physics, Chemistry, Mathematics &amp; Computer · Caspian Valley College, National Examinations Board, Lalitpur</div>
+      <div class="edu-year">2016 – 2018</div>
+    </div>
+    <div class="edu-card reveal reveal-delay-2">
+      <div class="edu-icon">🏫</div>
+      <div class="edu-degree">School Leaving Certificate</div>
+      <div class="edu-school">Orchid English School · Sarlahi</div>
+      <div class="edu-year">Completed 2016</div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section id="leadership">
+  <div class="sec-header reveal">
+    <div class="sec-tag">Activities</div>
+    <h2 class="sec-title">Leadership &amp; Certifications</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="lead-grid">
+    <div class="lead-card reveal">
+      <div class="lead-card-head">🧑‍🏫 Mentor — Sagarmatha Tech-Fest 2023</div>
+      <div class="lead-text">
+        Served as a <strong>Mentor</strong> at the Hardware Fellowship program (Arduino UNO R3 Board based),
+        guiding participants through hands-on hardware during pre-events of Sagarmatha Tech-Fest 2023
+        (November 26–29, 2023).
+      </div>
+    </div>
+    <div class="lead-card reveal reveal-delay-1">
+      <div class="lead-card-head">⚙ Coordinator — Battle-Bot Competition 2023</div>
+      <div class="lead-text">
+        Served as <strong>Coordinator</strong> at the Battle-Bot (15 Kg.) competition during the
+        mega-events of Sagarmatha Tech-Fest 2023 (December 15–16, 2023), managing event logistics
+        and participant coordination.
+      </div>
+    </div>
+  </div>
+  <div class="cert-grid">
+    <div class="cert-card reveal">
+      <div class="cert-icon">🤖</div>
+      <div class="cert-name">Machine Learning</div>
+      <div class="cert-issuer">Training Certificate · Sagarmatha Engineering College</div>
+    </div>
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-icon">📱</div>
+      <div class="cert-name">Flutter &amp; Node.js</div>
+      <div class="cert-issuer">Training Certificate · Sagarmatha Engineering College</div>
+    </div>
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-icon">🏅</div>
+      <div class="cert-name">Mentor &amp; Coordinator</div>
+      <div class="cert-issuer">Recognition Certificate · Sagarmatha Tech-Fest 2023</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-header reveal" style="text-align:center;align-items:center;display:flex;flex-direction:column;">
+    <div class="sec-tag">Reach Out</div>
+    <h2 class="sec-title">Contact</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="contact-wrapper reveal" style="border-radius:4px;overflow:hidden;">
+    <div class="contact-cell">
+      <div class="contact-cell-label">Email</div>
+      <div class="contact-cell-val"><a href="mailto:seasondahalonly1@gmail.com">seasondahalonly1@gmail.com</a></div>
+    </div>
+    <div class="contact-cell">
+      <div class="contact-cell-label">Phone</div>
+      <div class="contact-cell-val">+977 9863513850</div>
+    </div>
+    <div class="contact-cell">
+      <div class="contact-cell-label">LinkedIn</div>
+      <div class="contact-cell-val"><a href="https://linkedin.com/in/season-dahal-60685a196/" target="_blank">season-dahal-60685a196</a></div>
+    </div>
+    <div class="contact-cell">
+      <div class="contact-cell-label">GitHub</div>
+      <div class="contact-cell-val"><a href="https://github.com/01Season" target="_blank">github.com/01Season</a></div>
+    </div>
+  </div>
+  <div class="contact-cta reveal">
+    <a href="mailto:seasondahalonly1@gmail.com" class="btn-gold">Send Email →</a>
+    <a href="https://linkedin.com/in/season-dahal-60685a196/" target="_blank" class="btn-ghost">LinkedIn Profile</a>
+  </div>
+</section>
+
+<footer>
+  <p>// Season Dahal &nbsp;·&nbsp; Kathmandu, Nepal &nbsp;·&nbsp; 2025 &nbsp;·&nbsp; Built with HTML / CSS / JS</p>
+</footer>
+
+<script>
+// Custom cursor
+const cur = document.getElementById('cur');
+const curR = document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{curR.style.transform='translate(-50%,-50%) scale(1.8)';curR.style.opacity='0.3';});
+  el.addEventListener('mouseleave',()=>{curR.style.transform='translate(-50%,-50%) scale(1)';curR.style.opacity='0.6';});
+});
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on');});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Nav active link
+const sections=document.querySelectorAll('section[id]');
+const links=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{
+  let cur='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-140)cur=s.id;});
+  links.forEach(a=>{
+    const active=a.getAttribute('href')==='#'+cur;
+    a.style.color=active?'var(--gold)':'';
+  });
+});
+</script>
+</body>
+</html>
